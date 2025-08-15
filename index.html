@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="tr">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>Rastgele Sayfa</title>
+    <link rel="icon" href="adk_favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+    <style>
+    body {
+        margin: 0;
+        justify-content: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow-y: scroll;
+        flex-direction: column;
+        font-family: 'EB Garamond', serif;
+        background-image: url('Dandik.jpeg');
+        height: auto;
+        text-align: center;
+    }
+    h1 {
+        font-family: 'EB Garamond', serif;
+    }
+    .navbar {
+  display: flex;
+  justify-content: center; /* yatayda ortalar */
+  align-items: center;
+  margin-top: 20px;
+}
+.navbar a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.1); /* örnek kutu efekti */
+  border-radius: 8px; /* köşeleri yumuşatmak için */
+  margin-right: 10%;
+  position: relative;
+  color: white;
+  text-decoration: none;
+
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #ffcc00;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+.navbar ul ul {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  justify-items: start;
+
+}
+
+.navbar ul ul li {
+  margin-top: 5px;
+}
+
+.navbar ul ul li a {
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #eee;
+}
+.navbar li:hover > ul {
+  display: block; /* sadece hover ile görünür */
+  opacity: 1;
+  visibility: visible;
+
+}
+html {
+  scroll-behavior: smooth;
+}
+p {
+    padding: 30px;
+    text-align: left;
+    font-family: 'EB Garamond', serif;
+    font-size: larger;
+}
+table, th, td {
+    padding: 40px;
+    border: 4px solid rgb(126, 210, 245),;
+    border-collapse: collapse;
+}
+.yorum-formu {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-family: 'EB Garamond', serif;
+  color: white;
+}
+
+.yorum-formu h3 {
+  font-size: 28px;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.yorum-formu label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.yorum-formu input,
+.yorum-formu textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-style: italic;
+}
+
+.yorum-formu button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ffcc00;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.yorum-formu button:hover {
+  background-color: #ffe680;
+}
+#yorumListesi {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+#yorumlarUl {
+  list-style-type: none;
+  padding: 0;
+}
+
+#yorumlarUl li {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #ffcc00;
+  border-radius: 6px;
+  font-style: italic;
+  color: white;
+}
+video {
+  pointer-events: none;
+  width: 100%;
+  height: auto;
+}
+table caption {
+  caption-side: top;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+
+    
+
+    </style>
+ </head>
+ <body>
+    <section id="home">
+   <h1>İLK WEB SAYFA DENEMEME HOŞGELDİNİZ</h1>
+  <nav class="navbar">
+  <ul class="nav-links">
+    <li><a href="#home">ANA SAYFA</a></li>
+    <li>
+      <a href="#bolumler">BÖLÜMLER</a>
+      <ul>
+        <li><a href="#seruven">Serüvenim</a></li>
+        <li><a href="#neden">Neden Bu Web Site</a></li>
+        <li><a href="#salla">Html Sallamasyonlarım</a></li>
+        <li><a href="#yorumlar">Ziyaretçi Yorumları</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</section>
+<section id="bolumler">
+    <h2>BÖLÜMLER</h2>
+    <p>Sayfamız 4 bölümden oluşmaktadır:Serüvenim, Neden Bu Web Site, Html Sallamasyonlarım, Ziyaretçi Yorumları
+    </p>
+    <section id="seruven"><h3>Serüvenim</h3>
+        <p>Başta phyton kodlayarak başladığım bu yolculukta başlarda çok sıkılıyordum. Çalışmaya çalışıyordum ama içimden gelmiyordu. Birkaç gün ilgilenmediğim zaman bazı yerleri unutuyordum(htmlde de unutuyorum normalmiş). </p>
+        <p>Günlerden bir gün babamın çalıştığı yere gittim ve Macit abiyle tanıştım. Kendisi benden çok ileride olan meslektaşımdı. Onla benim çalışmalarım ve gelecekteki derslerimle alakalı hasihal ederken phyton yerine html, css ve javascript öğrenmemin daha iyi olacağını söyledi. Ben de büyüğümün sözünü dinleyip çalışmaya koyuldum.
+        </p>
+        <p>İlk başlarda çok iyi ilerleme kaydettim ancak temmuzun ortasında bastıran sıcaklarla birlikte çalışma isteğim de eriyip gitmişti. Ayrıca akraba ziyaretleri de benim odağımı bir hayli dağıtmıştı. Ağustosun ortalarına doğru vaktin daraldığını gördüm. İçimde bir çalışma üsteği uyandı. Ben de arkama aldığım bu rüzgar boşa gitmesin diye bu websitesini yazdım.</p>
+    </section>
+    <section id="neden"><h3>Neden Bu Web Site</h3>
+        <p>Bu web site size sadece benim yazılım maceramın başlarıyla alakalı kendi kalemimden dökülen bilgileri paylaşmak için yaptığım bir sayfa. Herhangi bir beklenti dahilinde değil kendi gelişimimi desteklemek için yapılmıştır. Sayfanın ortasında sağında solunda bir dizi saçmalıklar görebilirsiniiz ama bu umrumda değil çünkü ben gelişmek için yapıyorum.</p>
+<p>Sayfadan ayrıldığınızda sayfayla alakalı görüşlerinizi bırakabilirsiniz şimdiden teşekkürler &#128075</p>
+    </section>
+    <section id="salla"><h3>Html Sallamasyonlarım</h3>
+        <p>Bu bölümde rastgele html özelliklerini birbirinden bağımsız deneyeceğim.</p>
+        <table> 
+            <caption>Tablo</caption>
+            <tr>
+                <th>Çalışan Adı</th>
+                <th>Maaş</th>
+                <th>Mesai saati</th>
+            </tr>
+            <tr>
+                <td>Ali</td>
+                <td>25.000</td>
+                <td>40</td>
+            </tr>
+            <tr>
+                <td>Veli</td>
+                <td>30.000</td>
+                <td>48</td>
+            </tr>
+            <tr>
+                <td>Ahmet</td>
+                <td>44.000</td>
+                <td>42</td>
+            </tr>
+        </table>
+        <p><mark style="color: red;">Not:</mark>Ahmet kıdemli olduğu için daha fazla maaş almıştır.</p>
+        <p>Alıntı ekleyelim:</p>
+        <blockquote cite="https://tr.wikipedia.org/wiki/K%C4%B1r%C5%9Fehir">Hirfanlı Baraj Gölü
+Elektrik üretmek, taşkınları önlemek ve sulamada kullanılmak amacıyla 
+1959 yılında tamamlanan ve 8 Ocak 1960 tarihinde işletmeye açılan Hirfanlı 
+Barajı'nın açılışına zamanın Cumhurbaşkanı Celal Bayar, Meclis Başkanı Refik Koraltan, 
+Başbakan Adnan Menderes, bakanlar ve diplomatik erkan katıldı. O tarihlerde Türkiye'nin 
+büyük barajı olan 81 metre yüksekliğindeki bu barajın gölünün en geniş yeri 15 kilometredir. 
+75 kilometre uzunluğundaki baraj gölünün alanı 320 kilometrekaredir. Şu anda Türkiye'nin Keban'dan sonra 
+ikinci büyük barajıdır. 6 milyar metreküp kaya dolgu ile yapılan barajdan yılda 400 milyon kilovatsaat 
+enerji üretiliyor. 4 tribünden meydana gelen santralın oluşturduğu yapay göl, yörenin iklimini olumlu 
+yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen balıklar arasında sazan, kefal,
+ kaya ve gümüşbalığı ile kepenek türündeki balıklar bulunmaktadır. Kaman'a 19 kilometre uzaklıktaki 
+ tesisler doğrudan doğruya ilçeye bağlıdır. Bu tesisler yörede yaşayan halkın deniz ve plaj gereksinimini
+  karşılayabilecek durumdadır. Gölün suyu tatlıdır...</blockquote>
+  <p>Bir alıntı da benden:<q> <em>"Dünyada yapılması en zor şey kektir"</em>
+     <i>-Derviş, Kek Sanatı</i></q></p>
+     <p>Sayfanın altında yorum yapmayı unutmayınız &#128519 .</p>
+    <iframe src="index.html"></iframe>
+<video autoplay muted playsinline>
+  <source src="Dandik.mp4" type="video/mp4">
+</video>
+    </section>
+<section id="yorumlar" class="yorum-formu">
+  <h3>Ziyaretçi Yorumları</h3>
+  <p>Neredeyse unutuyordum Ahmet Efe dandiksin tıpkı GATA gibi.</p>
+  <form id="yorumFormu">
+    <label for="ad">Ad:</label>
+    <input type="text" id="ad" name="ad" required>
+
+    <label for="soyad">Soyad:</label>
+    <input type="text" id="soyad" name="soyad" required>
+
+    <label for="yorum">Yorumunuz:</label>
+    <textarea id="yorum" name="yorum" rows="4" required></textarea>
+
+    <button type="submit">Gönder</button>
+  </form>
+
+  <div id="yorumListesi">
+    <h4>Yapılan Yorumlar:</h4>
+    <ul id="yorumlarUl"></ul>
+  </div>
+</section>
+</section>
+<script>
+  document.getElementById("yorumFormu").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const ad = document.getElementById("ad").value;
+    const soyad = document.getElementById("soyad").value;
+    const yorum = document.getElementById("yorum").value;
+
+    const yorumlarUl = document.getElementById("yorumlarUl");
+    const yeniYorum = document.createElement("li");
+    yeniYorum.innerHTML = `<strong>${ad} ${soyad}:</strong> ${yorum}`;
+    yorumlarUl.appendChild(yeniYorum);
+
+    this.reset();
+  });
+</script>
+ </body>
+</html>
