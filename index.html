@@ -187,8 +187,26 @@ table caption {
   font-weight: bold;
   margin-bottom: 0.5em;
 }
-
-
+.yorum-tarih {
+  font-size: 12px;
+  color: #ddd;
+  font-style: normal;
+  margin-top: 6px;
+  display: block;
+}
+@media (max-width: 600px) {
+  .yorum-formu {
+    padding: 20px;
+    margin: 20px;
+  }
+  .yorum-formu h3 {
+    font-size: 22px;
+  }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
     
 
     </style>
@@ -295,39 +313,94 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
   </div>
 </section>
 </section>
+<!-- Firebase bağlantısı -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <script>
-  // Sayfa yüklendiğinde önceki yorumları göster
-  window.addEventListener("DOMContentLoaded", function () {
-    const yorumlarUl = document.getElementById("yorumlarUl");
-    const yorumlar = JSON.parse(localStorage.getItem("yorumlar")) || [];
+  // Firebase yapılandırması
+  const firebaseConfig = {
+    apiKey: "AIzaSyCRfQ8R9aNZqTdfJhxE58n2K4p2zluGjBk",
+    authDomain: "yorumsistemi-1be8c.firebaseapp.com",
+    databaseURL: "https://yorumsistemi-1be8c-default-rtdb.firebaseio.com",
+    projectId: "yorumsistemi-1be8c",
+    storageBucket: "yorumsistemi-1be8c.firebasestorage.app",
+    messagingSenderId: "817367396418",
+    appId: "1:817367396418:web:e32012008cdac794f4fddb",
+    measurementId: "G-6EQW5YCS08"
+  };
 
-    yorumlar.forEach(function (yorum) {
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>${yorum.ad} ${yorum.soyad}:</strong> ${yorum.yorum}`;
-      yorumlarUl.appendChild(li);
-    });
-  });
+  // Firebase başlat
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-  // Yeni yorum ekleme ve kaydetme
-  document.getElementById("yorumFormu").addEventListener("submit", function (e) {
+  // Yorum gönderme
+  document.getElementById("yorumFormu").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const ad = document.getElementById("ad").value;
-    const soyad = document.getElementById("soyad").value;
-    const yorum = document.getElementById("yorum").value;
+    const ad = document.getElementById("ad").value.trim();
+    const soyad = document.getElementById("soyad").value.trim();
+    const yorum = document.getElementById("yorum").value.trim();
 
-    const yorumlarUl = document.getElementById("yorumlarUl");
-    const yeniYorum = document.createElement("li");
-    yeniYorum.innerHTML = `<strong>${ad} ${soyad}:</strong> ${yorum}`;
-    yorumlarUl.appendChild(yeniYorum);
+    if (!ad || !soyad || !yorum) {
+      alert("Lütfen tüm alanları doldurun.");
+      return;
+    }
 
-    // Local Storage’a kaydet
-    const mevcutYorumlar = JSON.parse(localStorage.getItem("yorumlar")) || [];
-    mevcutYorumlar.push({ ad, soyad, yorum });
-    localStorage.setItem("yorumlar", JSON.stringify(mevcutYorumlar));
+    if (yorum.length > 500) {
+      alert("Yorum çok uzun. Lütfen 500 karakterden kısa tutun.");
+      return;
+    }
 
+    const tarih = new Date().toLocaleString("tr-TR");
+    const zaman = Date.now();
+
+    db.ref("yorumlar").push({ ad, soyad, yorum, tarih, zaman, begeni: 0 });
     this.reset();
   });
+
+  // Yorumları sıralı göster
+  const yorumlarUl = document.getElementById("yorumlarUl");
+  db.ref("yorumlar").orderByChild("zaman").on("child_added", function(snapshot) {
+    const veri = snapshot.val();
+    const key = snapshot.key;
+
+    const li = document.createElement("li");
+    li.setAttribute("data-key", key);
+    li.style.animation = "fadeIn 0.6s ease forwards";
+
+    // Yorum metni
+    const yorumMetni = document.createElement("div");
+    yorumMetni.textContent = `${veri.ad} ${veri.soyad}: ${veri.yorum}`;
+    li.appendChild(yorumMetni);
+
+    // Tarih
+    const tarihSpan = document.createElement("span");
+    tarihSpan.className = "yorum-tarih";
+    tarihSpan.textContent = veri.tarih;
+    li.appendChild(tarihSpan);
+
+    // Beğeni butonu
+    const btn = document.createElement("button");
+    btn.textContent = `Beğen (${veri.begeni})`;
+    btn.className = "begeni-btn";
+    btn.addEventListener("click", function() {
+      db.ref("yorumlar/" + key + "/begeni").set(veri.begeni + 1);
+    });
+    li.appendChild(btn);
+
+    yorumlarUl.appendChild(li);
+  });
+
+  // Beğeni güncellemesi
+  db.ref("yorumlar").on("child_changed", function(snapshot) {
+    const veri = snapshot.val();
+    const key = snapshot.key;
+
+    const li = yorumlarUl.querySelector(`li[data-key="${key}"]`);
+    if (li) {
+      const btn = li.querySelector("button");
+      if (btn) btn.textContent = `Beğen (${veri.begeni})`;
+    }
+  });
 </script>
- </body>
-</html>
