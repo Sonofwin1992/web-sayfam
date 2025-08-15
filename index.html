@@ -194,6 +194,10 @@ table caption {
   margin-top: 6px;
   display: block;
 }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @media (max-width: 600px) {
   .yorum-formu {
     padding: 20px;
@@ -203,12 +207,6 @@ table caption {
     font-size: 22px;
   }
 }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-    
-
     </style>
  </head>
  <body>
@@ -355,7 +353,16 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
     const tarih = new Date().toLocaleString("tr-TR");
     const zaman = Date.now();
 
-    db.ref("yorumlar").push({ ad, soyad, yorum, tarih, zaman, begeni: 0 });
+    const veri = {
+      ad: ad,
+      soyad: soyad,
+      yorum: yorum,
+      tarih: tarih,
+      zaman: zaman,
+      begeni: Number(0) // Güvenlik kuralına uygun şekilde sayı olarak
+    };
+
+    db.ref("yorumlar").push(veri);
     this.reset();
   });
 
