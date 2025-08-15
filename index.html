@@ -296,7 +296,20 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
 </section>
 </section>
 <script>
-  document.getElementById("yorumFormu").addEventListener("submit", function(e) {
+  // Sayfa yüklendiğinde önceki yorumları göster
+  window.addEventListener("DOMContentLoaded", function () {
+    const yorumlarUl = document.getElementById("yorumlarUl");
+    const yorumlar = JSON.parse(localStorage.getItem("yorumlar")) || [];
+
+    yorumlar.forEach(function (yorum) {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${yorum.ad} ${yorum.soyad}:</strong> ${yorum.yorum}`;
+      yorumlarUl.appendChild(li);
+    });
+  });
+
+  // Yeni yorum ekleme ve kaydetme
+  document.getElementById("yorumFormu").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const ad = document.getElementById("ad").value;
@@ -307,6 +320,11 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
     const yeniYorum = document.createElement("li");
     yeniYorum.innerHTML = `<strong>${ad} ${soyad}:</strong> ${yorum}`;
     yorumlarUl.appendChild(yeniYorum);
+
+    // Local Storage’a kaydet
+    const mevcutYorumlar = JSON.parse(localStorage.getItem("yorumlar")) || [];
+    mevcutYorumlar.push({ ad, soyad, yorum });
+    localStorage.setItem("yorumlar", JSON.stringify(mevcutYorumlar));
 
     this.reset();
   });
