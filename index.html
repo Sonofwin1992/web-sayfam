@@ -104,7 +104,7 @@ p {
 }
 table, th, td {
     padding: 40px;
-    border: 4px solid rgb(126, 210, 245),;
+    border: 4px solid rgb(126, 210, 245);
     border-collapse: collapse;
 }
 .yorum-formu {
@@ -311,25 +311,26 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
   </div>
 </section>
 </section>
-<!-- Firebase bağlantısı -->
+<!-- Firebase kütüphaneleri -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
+<!-- Firebase kodları -->
 <script>
-  // Firebase yapılandırması
+  // Yeni Firebase yapılandırması
   const firebaseConfig = {
-    apiKey: "AIzaSyCRfQ8R9aNZqTdfJhxE58n2K4p2zluGjBk",
-    authDomain: "yorumsistemi-1be8c.firebaseapp.com",
-    databaseURL: "https://yorumsistemi-1be8c-default-rtdb.firebaseio.com",
-    projectId: "yorumsistemi-1be8c",
-    storageBucket: "yorumsistemi-1be8c.firebasestorage.app",
-    messagingSenderId: "817367396418",
-    appId: "1:817367396418:web:e32012008cdac794f4fddb",
-    measurementId: "G-6EQW5YCS08"
+    apiKey: "AIzaSyC0Vv3Np2WGN7-FrxkhEDC1pQtgRswSNM0",
+    authDomain: "yorumsistemi-8544f.firebaseapp.com",
+    databaseURL: "https://yorumsistemi-8544f-default-rtdb.firebaseio.com",
+    projectId: "yorumsistemi-8544f",
+    storageBucket: "yorumsistemi-8544f.firebasestorage.app",
+    messagingSenderId: "557212986444",
+    appId: "1:557212986444:web:6c0be14fd018a2cb9d58e9",
+    measurementId: "G-7JEMG57DTP"
   };
 
   // Firebase başlat
-  firebase.initializeApp(firebaseConfig);
+  const app = firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
   // Yorum gönderme
@@ -359,7 +360,7 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
       yorum: yorum,
       tarih: tarih,
       zaman: zaman,
-      begeni: Number(0) // Güvenlik kuralına uygun şekilde sayı olarak
+      begeni: 0
     };
 
     db.ref("yorumlar").push(veri);
@@ -376,23 +377,26 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
     li.setAttribute("data-key", key);
     li.style.animation = "fadeIn 0.6s ease forwards";
 
-    // Yorum metni
+    const ad = veri.ad || "Anonim";
+    const soyad = veri.soyad || "";
+    const yorum = veri.yorum || "(Yorum yok)";
+    const tarih = veri.tarih || "(Tarih yok)";
+    const begeni = typeof veri.begeni === "number" ? veri.begeni : 0;
+
     const yorumMetni = document.createElement("div");
-    yorumMetni.textContent = `${veri.ad} ${veri.soyad}: ${veri.yorum}`;
+    yorumMetni.textContent = `${ad} ${soyad}: ${yorum}`;
     li.appendChild(yorumMetni);
 
-    // Tarih
     const tarihSpan = document.createElement("span");
     tarihSpan.className = "yorum-tarih";
-    tarihSpan.textContent = veri.tarih;
+    tarihSpan.textContent = tarih;
     li.appendChild(tarihSpan);
 
-    // Beğeni butonu
     const btn = document.createElement("button");
-    btn.textContent = `Beğen (${veri.begeni})`;
+    btn.textContent = `Beğen (${begeni})`;
     btn.className = "begeni-btn";
     btn.addEventListener("click", function() {
-      db.ref("yorumlar/" + key + "/begeni").set(veri.begeni + 1);
+      db.ref("yorumlar/" + key + "/begeni").set(begeni + 1);
     });
     li.appendChild(btn);
 
@@ -407,9 +411,12 @@ yönde değiştirmektedir. Gölette kerevit ve balık üretilmektedir. Üretilen
     const li = yorumlarUl.querySelector(`li[data-key="${key}"]`);
     if (li) {
       const btn = li.querySelector("button");
-      if (btn) btn.textContent = `Beğen (${veri.begeni})`;
+      if (btn) {
+        const yeniBegeni = typeof veri.begeni === "number" ? veri.begeni : 0;
+        btn.textContent = `Beğen (${yeniBegeni})`;
+      }
     }
   });
 </script>
- </body>
+</body>
 </html>
